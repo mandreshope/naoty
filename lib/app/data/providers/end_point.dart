@@ -1,3 +1,3 @@
 abstract class EndPoint {
-  static const getAll = "/notes";
+  static const notes = "/notes";
 }

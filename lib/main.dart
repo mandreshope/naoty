@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Naoty',
+      defaultTransition: Transition.topLevel,
       initialRoute: Routes.INITIAL,
       getPages: AppPages.pages,
       initialBinding: HomeBinding(),

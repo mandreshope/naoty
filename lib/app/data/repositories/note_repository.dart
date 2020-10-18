@@ -23,8 +23,8 @@ NoteRepository({@required this.apiClient}) : assert(apiClient != null);
     return apiClient.edit( obj );
   }
 
-  Future add(obj){
-      return apiClient.add( obj );
+  Future add(String content){
+      return apiClient.add(content);
   }
 
 }
