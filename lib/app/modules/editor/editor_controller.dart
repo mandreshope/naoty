@@ -46,7 +46,10 @@ class EditorController extends GetxController {
   }
 
   Future<void> save() async {
-    if (isBtnSaveEnabled) {
+    if (!isBtnSaveEnabled) {
+      return;
+    }
+    if (note == null) {
       showLoadingDialog();
       repository.add(contentController.text)
       .then((value){
@@ -66,7 +69,31 @@ class EditorController extends GetxController {
           )
         );
       });
+    }else {
+      edit();
     }
+  }
+
+  Future<void> edit() async {
+    showLoadingDialog();
+    repository.edit(note.id, contentController.text)
+    .then((value){
+      closeLoadingDialog();
+      Get.back();
+    })
+    .catchError((onError) {
+      closeLoadingDialog();
+      Get.dialog(
+        AlertPopup(
+          isError: true,
+          title: "Erreur",
+          content: onError.toString(),
+          onCanceled: () {
+            Get.back();
+          },
+        )
+      );
+    });
   }
 
   void clear() async {

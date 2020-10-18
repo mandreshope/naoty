@@ -43,8 +43,26 @@ class ApiClient {
 
   }
 
-  edit(obj){
-
+  Future edit(String id, String content) async {
+    try {
+      var response = await httpClient.put(
+        '$baseUrl${EndPoint.notes}/$id', 
+        body: {
+          'content': content
+        },
+      ).timeout(Duration(minutes: 1));
+      if(response.statusCode == 200){
+        var jsonResponse = json.decode(response.body);
+        NoteModel result = NoteModel.fromJson(jsonResponse);
+        return result;
+      }else throw 'error';
+    } on TimeoutException catch (_) {
+      throw "Le délai d'attente est dépassé.";
+    } on SocketException catch (_) {
+      throw "Veuillez vérifier votre connexion Internet.";
+    } on Error catch (_) {
+      throw _.toString();
+    } catch(_){ throw _.toString();}
   }
 
   Future add(String content) async {
@@ -57,7 +75,7 @@ class ApiClient {
       ).timeout(Duration(minutes: 1));
       if(response.statusCode == 200){
         var jsonResponse = json.decode(response.body);
-        NoteModel result = NoteModel.fromJson(jsonResponse['data']);
+        NoteModel result = NoteModel.fromJson(jsonResponse);
         return result;
       }else throw 'error';
     } on TimeoutException catch (_) {

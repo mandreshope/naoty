@@ -9,11 +9,13 @@ class EditorView extends GetView<EditorController> {
   Widget build(BuildContext context) {
 
     final editor = TextField( 
-      maxLines: 10,
-      minLines: 10,
+      maxLines: 100,
+      minLines: 100,
       controller: controller.contentController,
+      style: TextStyle(fontSize: 20),
       decoration: InputDecoration(
-        border: InputBorder.none
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.all(0)
       ),
       onChanged: (v) {
         controller.checkFieldIsEmpty();
@@ -21,7 +23,7 @@ class EditorView extends GetView<EditorController> {
     );
 
     final form = Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(

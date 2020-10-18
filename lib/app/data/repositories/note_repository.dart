@@ -19,8 +19,8 @@ NoteRepository({@required this.apiClient}) : assert(apiClient != null);
     return apiClient.delete(id);
   }
 
-  Future edit(obj){
-    return apiClient.edit( obj );
+  Future edit(String id, String content){
+    return apiClient.edit(id, content);
   }
 
   Future add(String content){
