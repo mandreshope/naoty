@@ -4,6 +4,7 @@ import 'package:naoty/app/data/models/note_model.dart';
 import 'package:naoty/app/data/repositories/note_repository.dart';
 import 'package:naoty/app/routes/app_pages.dart';
 import 'package:naoty/app/widgets/alert_popup.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeController extends GetxController {
 
@@ -14,6 +15,9 @@ class HomeController extends GetxController {
   RxList<NoteModel> _notes = <NoteModel>[].obs;
   RxList<NoteModel> get notes => this._notes;
   set notes(value) => this._notes.value = value;
+
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
 
   NoteModel note;
 
@@ -45,8 +49,8 @@ class HomeController extends GetxController {
     .then((value) => getAll());
   }
 
-  getAll() {
-    repository.getAll()
+  Future getAll() {
+    return repository.getAll()
     .then((value){
       notes.clear();
       notes.addAll(value);
@@ -64,6 +68,20 @@ class HomeController extends GetxController {
         )
       );
     });
+  }
+
+  void onRefresh() async{
+    // monitor network fetch
+    await getAll();
+    // if failed,use refreshFailed()
+    refreshController.refreshCompleted();
+  }
+
+  void onLoading() async{
+    // monitor network fetch
+    await getAll();
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    refreshController.loadComplete();
   }
   
 }

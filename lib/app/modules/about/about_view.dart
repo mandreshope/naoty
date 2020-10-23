@@ -7,7 +7,10 @@ class AboutView extends GetView<AboutController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('AboutPage')),
+      appBar: AppBar(
+        title: Text('A propos'),
+        centerTitle: true,
+      ),
       body: Container(),
     );
   }

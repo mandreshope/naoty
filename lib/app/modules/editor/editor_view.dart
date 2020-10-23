@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'editor_controller.dart';
 
 class EditorView extends GetView<EditorController> {
@@ -9,9 +10,10 @@ class EditorView extends GetView<EditorController> {
   Widget build(BuildContext context) {
 
     final editor = TextField( 
-      maxLines: 100,
-      minLines: 100,
+      maxLines: Get.height.toInt(),
+      minLines: 1,
       controller: controller.contentController,
+      autofocus: true,
       style: TextStyle(fontSize: 20),
       decoration: InputDecoration(
         border: InputBorder.none,
@@ -27,8 +29,13 @@ class EditorView extends GetView<EditorController> {
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            editor
+            editor,
+            SizedBox(height: 10,),
+            controller.note != null 
+            ? Text("Dernière mise à jour : "+(DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? ""), )
+            : Container(),
           ],
         ),
       ),
@@ -38,17 +45,30 @@ class EditorView extends GetView<EditorController> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close, color: Get.context.theme.primaryColor, size: 30,), 
+          icon: Icon(Icons.close, color: Get.context.theme.primaryColor, size: 25,), 
           onPressed: () {
             Get.back();
           }
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text("Contenu"),
+        centerTitle: true,
+        title: controller.note != null 
+        ? Text((DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.createdAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.createdAt))?? ""), 
+          style: TextStyle(
+            color: Colors.grey
+          ),
+        )
+        : Text((DateFormat.yMMMMd('fr_FR').format(DateTime.now())?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.now())?? ""), 
+          style: TextStyle(
+            color: Colors.grey
+          ),
+        ),
         actions: <Widget>[
           Obx(()=>IconButton(
-            icon: Icon(Icons.check, color: controller.isBtnSaveEnabled ? Get.context.theme.primaryColor : Get.context.theme.primaryColor.withOpacity(0.5), size: 30,),
+            icon: Icon(Icons.check, color: controller.isBtnSaveEnabled 
+            ? Get.context.theme.primaryColor 
+            : Get.context.theme.primaryColor.withOpacity(0.5), size: 25,),
             onPressed: () => controller.save(),
           ),)
         ],
