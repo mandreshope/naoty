@@ -125,7 +125,10 @@ class HomeController extends GetxController {
     .then((value){
       clear();
       notes.clear();
-      notes.addAll(value.notes);
+      List<NoteModel> sortList = [];
+      sortList.addAll(value.notes);
+      sortList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      notes.addAll(sortList);
     })
     .catchError((onError) {
       print(onError);

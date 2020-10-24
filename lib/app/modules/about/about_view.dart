@@ -25,7 +25,7 @@ class AboutView extends GetView<AboutController> {
                   children: [
                     ListTile(
                       leading: Icon(Icons.apps_outlined, color: Get.theme.primaryColor),
-                      title: Text("appName : ${snapshot.data.appName })", style: TextStyle(
+                      title: Text("appName : ${snapshot.data.appName }", style: TextStyle(
                           color: Get.theme.primaryColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold
@@ -34,7 +34,7 @@ class AboutView extends GetView<AboutController> {
                     ),
                     ListTile(
                       leading: Icon(Icons.update, color: Get.theme.primaryColor),
-                      title: Text("version : ${snapshot.data.version})", style: TextStyle(
+                      title: Text("version : ${snapshot.data.version}", style: TextStyle(
                           color: Get.theme.primaryColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold
@@ -43,7 +43,7 @@ class AboutView extends GetView<AboutController> {
                     ),
                     ListTile(
                       leading: Icon(Icons.build, color: Get.theme.primaryColor),
-                      title: Text("buildNumber : (${snapshot.data.buildNumber})", style: TextStyle(
+                      title: Text("buildNumber : ${snapshot.data.buildNumber}", style: TextStyle(
                           color: Get.theme.primaryColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold
