@@ -5,4 +5,5 @@ abstract class EndPoint {
   static const login = "/auth/local";
   static const register = "/auth/local/register";
   static const forgotPassword = "/auth/forgot-password";
+  static const resetPassword = "/auth/reset-password";
 }

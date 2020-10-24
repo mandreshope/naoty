@@ -89,8 +89,32 @@ class AuthService extends GetxService {
     });
   }
 
-  Future forgotPasswored(String identity) {
-    return repository.forgotPasswored(identity);
+  Future forgotPassword(String identity) {
+    return repository.forgotPassword(identity);
+  }
+
+  Future resetPassword(String code, String password, String passwordConfirmation) {
+    showLoadingDialog();
+    return repository.resetPassword(code, password, passwordConfirmation).then((value) {
+      closeLoadingDialog();
+      currentUser = value;
+      token.write(tokenBox, currentUser.jwt);
+      Get.offAllNamed(Routes.HOME);
+    })
+    .catchError((onError) {
+      print(onError);
+      closeLoadingDialog();
+      Get.dialog(
+        AlertPopup(
+          isError: true,
+          title: "Erreur",
+          content: onError.toString(),
+          onCanceled: () {
+            Get.back();
+          },
+        ),
+      );
+    });
   }
 
   Future<void> signOut() async {

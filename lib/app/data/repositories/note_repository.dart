@@ -43,8 +43,12 @@ NoteRepository({@required this.apiClient}) : assert(apiClient != null);
     return apiClient.register(username, email, password);
   }
 
-  Future forgotPasswored(String email) {
-    return apiClient.forgotPasswored(email);
+  Future forgotPassword(String email) {
+    return apiClient.forgotPassword(email);
+  }
+
+  Future resetPassword(String code, String password, String passwordConfirmation) {
+    return apiClient.resetPassword(code, password, passwordConfirmation);
   }
 
 }

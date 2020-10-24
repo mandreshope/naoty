@@ -197,7 +197,7 @@ class ApiClient {
     } catch(_){ throw _.toString();}
   }
 
-  Future forgotPasswored(String email) async {
+  Future forgotPassword(String email) async {
     try {
       var response = await httpClient.post(
         '$baseUrl${EndPoint.forgotPassword}', 
@@ -209,6 +209,30 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         return jsonResponse;
       }else throw 'error';
+    } on TimeoutException catch (_) {
+      throw "Le délai d'attente est dépassé.";
+    } on SocketException catch (_) {
+      throw "Veuillez vérifier votre connexion Internet.";
+    } on Error catch (_) {
+      throw _.toString();
+    } catch(_){ throw _.toString();}
+  }
+
+  Future resetPassword(String code, String password, String passwordConfirmation) async {
+    try {
+      var response = await httpClient.post(
+        '$baseUrl${EndPoint.resetPassword}', 
+        body: {
+          'code': code,
+          'password': password,
+          'passwordConfirmation': passwordConfirmation
+        },
+      ).timeout(timeout);
+      if(response.statusCode == 200){
+        var jsonResponse = json.decode(response.body);
+        UserModel result = UserModel.fromJson(jsonResponse);
+        return result;
+      }else throw 'Code incorrect';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {

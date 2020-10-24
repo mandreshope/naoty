@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:naoty/app/data/services/auth_service.dart';
+import 'package:naoty/app/routes/app_pages.dart';
 import 'package:naoty/app/tools/tools.dart';
 import 'package:naoty/app/widgets/alert_popup.dart';
 
@@ -28,9 +29,12 @@ class ForgotPasswordController extends GetxController {
     }
   }
 
-  resetPassword() {
+  forgotPassword() {
+    if(!isButtonEnabled) {
+      return;
+    }
     showLoadingDialog();
-    authService.forgotPasswored(emailController.text)
+    authService.forgotPassword(emailController.text)
     .then((value) {
       closeLoadingDialog();
       Get.dialog(
@@ -42,7 +46,7 @@ class ForgotPasswordController extends GetxController {
             Get.back();
           },
         ),
-      );
+      ).then((value) => Get.offNamed(Routes.RESET_PASSWORD));
     })
     .catchError((onError) {
       closeLoadingDialog();
