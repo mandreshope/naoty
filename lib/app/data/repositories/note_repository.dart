@@ -23,8 +23,28 @@ NoteRepository({@required this.apiClient}) : assert(apiClient != null);
     return apiClient.edit(id, content);
   }
 
-  Future add(String content){
-      return apiClient.add(content);
+  Future add(String content, String userId){
+      return apiClient.add(content, userId);
+  }
+
+  Future me() {
+    return apiClient.me();
+  }
+
+  Future getUser(String id) {
+    return apiClient.getUser(id);
+  }
+
+  Future login(String identifier, String password) {
+    return apiClient.login(identifier, password);
+  }
+
+  Future register(String username, String email, String password) {
+    return apiClient.register(username, email, password);
+  }
+
+  Future forgotPasswored(String email) {
+    return apiClient.forgotPasswored(email);
   }
 
 }

@@ -11,10 +11,21 @@ import 'package:naoty/app/modules/editor/editor_binding.dart';
 import 'package:naoty/app/modules/editor/editor_view.dart';
 import 'package:naoty/app/modules/home/home_binding.dart';
 import 'package:naoty/app/modules/home/home_view.dart';
+import 'package:naoty/app/modules/splash/splash_binding.dart';
+import 'package:naoty/app/modules/splash/splash_view.dart';
 part './app_routes.dart';
 
 abstract class AppPages {
   static final pages = [
+    GetPage(
+      name: Routes.SPLASH, 
+      page:()=> SplashView(), 
+      binding: SplashBinding(),
+      bindings: [
+        HomeBinding(),
+        LoginBinding()
+      ]
+    ),
     GetPage(
       name: Routes.HOME, 
       page:()=> HomeView(), 

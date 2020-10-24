@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
-import 'package:naoty/app/data/repositories/note_repository.dart';
+import 'package:naoty/app/data/services/auth_service.dart';
+import 'package:naoty/app/tools/tools.dart';
+import 'package:naoty/app/widgets/alert_popup.dart';
 
 class ForgotPasswordController extends GetxController {
 
-  final NoteRepository repository;
-  ForgotPasswordController({@required this.repository}) : assert(repository != null);
+  AuthService authService = Get.find<AuthService>();
   
-  TextEditingController identifiantController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   
   RxBool _isButtonEnabled = false.obs;
   bool get isButtonEnabled => this._isButtonEnabled.value;
@@ -22,7 +21,7 @@ class ForgotPasswordController extends GetxController {
   }
 
   isTextFieldEmpty() {
-    if ((identifiantController.text.trim() != "")) {
+    if ((emailController.text.trim() != "")) {
         isButtonEnabled = true;
     } else {
         isButtonEnabled = false;
@@ -30,13 +29,39 @@ class ForgotPasswordController extends GetxController {
   }
 
   resetPassword() {
-    
+    showLoadingDialog();
+    authService.forgotPasswored(emailController.text)
+    .then((value) {
+      closeLoadingDialog();
+      Get.dialog(
+        AlertPopup(
+          isError: false,
+          title: "Réussi",
+          content: "Un lien de récupération mot de passe a été envoyé à ${emailController.text}.",
+          onCanceled: () {
+            Get.back();
+          },
+        ),
+      );
+    })
+    .catchError((onError) {
+      closeLoadingDialog();
+      Get.dialog(
+        AlertPopup(
+          isError: true,
+          title: "Erreur",
+          content: onError.toString(),
+          onCanceled: () {
+            Get.back();
+          },
+        ),
+      );
+    });
   }
 
   @override
   void onClose() {
-    identifiantController.dispose();
-    passwordController.dispose();
+    emailController.dispose();
     super.onClose();
   }
 

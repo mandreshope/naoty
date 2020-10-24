@@ -34,7 +34,7 @@ class EditorView extends GetView<EditorController> {
             editor,
             SizedBox(height: 10,),
             controller.note != null 
-            ? Text("Dernière mise à jour : "+(DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? ""), )
+            ? Text("Dernière mise à jour le "+(DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? ""), )
             : Container(),
           ],
         ),
@@ -56,12 +56,12 @@ class EditorView extends GetView<EditorController> {
         title: controller.note != null 
         ? Text((DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.createdAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.createdAt))?? ""), 
           style: TextStyle(
-            color: Colors.grey
+            color: Get.theme.primaryColor.withOpacity(0.5)
           ),
         )
         : Text((DateFormat.yMMMMd('fr_FR').format(DateTime.now())?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.now())?? ""), 
           style: TextStyle(
-            color: Colors.grey
+            color: Get.theme.primaryColor.withOpacity(0.5)
           ),
         ),
         actions: <Widget>[

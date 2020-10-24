@@ -31,9 +31,9 @@ class RegisterView extends GetView<RegisterController> {
           child: Column(
             children: [
               InputField(
-                controller: controller.fullName,
-                prefixIcon: Icon(Icons.person),
-                hintText: "Nom et prénoms".tr,
+                controller: controller.username,
+                prefixIcon: Icon(Icons.person, color: Get.theme.primaryColor,),
+                hintText: "Nom d'utilisateur".tr,
                 onChanged: (v) {
                   controller.isTextFieldEmpty();
                 },
@@ -41,7 +41,7 @@ class RegisterView extends GetView<RegisterController> {
               Obx(()=>InputField(
                 controller: controller.email,
                 keyboardType: TextInputType.emailAddress,
-                prefixIcon: Icon(Icons.email),
+                prefixIcon: Icon(Icons.email, color: Get.theme.primaryColor,),
                 hintText: "Email".tr,
                 errorText: controller.errorMessage == '' ? null : controller.errorMessage,
                 borderColor: controller.errorMessage == '' ?  Colors.grey[200] : Get.theme.primaryColor,
@@ -51,13 +51,12 @@ class RegisterView extends GetView<RegisterController> {
                   }else{
                     controller.errorMessage = '';
                   }
-                  print(controller.errorMessage);
                   controller.isTextFieldEmpty();
                 },
               ),),
               Obx(()=>InputField(
                 controller: controller.password,
-                prefixIcon: Icon(Icons.security),
+                prefixIcon: Icon(Icons.security, color: Get.theme.primaryColor,),
                 obscureText: controller.obscureText,
                 errorText: controller.passworedErrorMessage == '' ? null : controller.passworedErrorMessage,
                 borderColor: controller.passworedErrorMessage == '' ?  Colors.grey[200] : Get.theme.primaryColor,

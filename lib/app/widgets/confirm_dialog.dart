@@ -32,14 +32,15 @@ class ConfirmDialog extends StatelessWidget {
               color: Get.context.theme.primaryColor
             ), textAlign: TextAlign.center,),
           ),
-          Container(
+          subTitle != null
+          ? Container(
             margin: EdgeInsets.symmetric(vertical: 10),
             child: Text(subTitle.tr, style: TextStyle(
               fontSize: Get.textTheme.headline6.fontSize,
               fontWeight: FontWeight.bold,
               color: Get.context.theme.primaryColor
             ), textAlign: TextAlign.center,),
-          ),
+          ) : Container(),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10),
             child: Text(content.tr, style: TextStyle(

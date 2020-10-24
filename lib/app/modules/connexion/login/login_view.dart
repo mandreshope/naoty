@@ -28,16 +28,16 @@ class LoginView extends GetView<LoginController> {
                 ),),
               ),
               InputField(
-                controller: controller.emailController,
-                prefixIcon: Icon(Icons.email),
-                hintText: "Email".tr,
+                controller: controller.identifierController,
+                prefixIcon: Icon(Icons.person, color: Get.theme.primaryColor,),
+                hintText: "Nom d'utilisateur".tr,
                 onChanged: (v) {
                   controller.isTextFieldEmpty();
                 },
               ),
               Obx(()=>InputField(
                 controller: controller.passwordController,
-                prefixIcon: Icon(Icons.security),
+                prefixIcon: Icon(Icons.security, color: Get.theme.primaryColor,),
                 obscureText: controller.obscureText,
                 hintText: "Mot de passe".tr,
                 suffixIcon: IconButton(icon: Icon(controller.obscureText ? Icons.visibility_off : Icons.visibility, color: Get.theme.primaryColor.withOpacity(0.5),), 

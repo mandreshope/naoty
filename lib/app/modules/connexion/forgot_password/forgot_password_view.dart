@@ -36,8 +36,8 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   color: Get.theme.primaryColor, fontSize: 30
                 ),),),
               InputField(
-                controller: controller.identifiantController,
-                prefixIcon: Icon(Icons.email),
+                controller: controller.emailController,
+                prefixIcon: Icon(Icons.email, color: Get.theme.primaryColor,),
                 keyboardType: TextInputType.emailAddress,
                 hintText: "Email".tr,
                 onChanged: (v) {

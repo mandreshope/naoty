@@ -2,6 +2,8 @@
 import 'package:get/get.dart';
 import 'package:naoty/app/widgets/loading_dialog.dart';
 
+const tokenBox = "token";
+
 showLoadingDialog() {
   return Get.dialog(LoadingDialog(color: Get.theme.primaryColor,), barrierDismissible: false);
 }

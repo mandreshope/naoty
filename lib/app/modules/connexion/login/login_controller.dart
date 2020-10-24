@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
-import 'package:naoty/app/data/repositories/note_repository.dart';
+import 'package:naoty/app/data/services/auth_service.dart';
 
 class LoginController extends GetxController {
 
-  final NoteRepository repository;
-  LoginController({@required this.repository}) : assert(repository != null);
+  AuthService authService = Get.find<AuthService>();
   
-  TextEditingController emailController = TextEditingController();
+  TextEditingController identifierController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   
   RxBool _isButtonEnabled = false.obs;
@@ -28,7 +26,7 @@ class LoginController extends GetxController {
   }
 
   isTextFieldEmpty() {
-    if ((emailController.text.trim() != "") && (passwordController.text.trim() != "")) {
+    if ((identifierController.text.trim() != "") && (passwordController.text.trim() != "")) {
         isButtonEnabled = true;
     } else {
         isButtonEnabled = false;
@@ -41,14 +39,14 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    emailController.dispose();
+    identifierController.dispose();
     passwordController.dispose();
     super.onClose();
   }
 
   login() {
     if(isButtonEnabled) {
-      
+      authService.login(identifierController.text, passwordController.text);
     } 
   }
 

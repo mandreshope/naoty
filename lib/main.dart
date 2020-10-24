@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:naoty/app/moduleS/home/home_binding.dart';
-import 'package:naoty/app/modules/connexion/login/login_binding.dart';
-import 'package:naoty/app/modules/connexion/login/login_view.dart';
+import 'package:naoty/app/modules/splash/splash_binding.dart';
+import 'package:naoty/app/modules/splash/splash_view.dart';
 import 'package:naoty/app/routes/app_pages.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'app/data/services/auth_service.dart';
 import 'app/translations/app_translations.dart';
 
 Future<void> main() async {
 
   await GetStorage.init();
+  initServices();
   
   runApp(GetMaterialApp(
     title: 'Naoty',
     defaultTransition: Transition.topLevel,
-    initialRoute: Routes.LOGIN,
+    initialRoute: Routes.SPLASH,
     getPages: AppPages.pages,
-    initialBinding: LoginBinding(),
+    initialBinding: SplashBinding(),
     localizationsDelegates: [
       // ... app-specific localization delegate[s] here
       GlobalMaterialLocalizations.delegate,
@@ -60,7 +61,19 @@ Future<void> main() async {
         ResponsiveBreakpoint.resize(1000, name: DESKTOP),
       ],
       background: Container(color: Color(0xFFF5F5F5))),
-    home: LoginView()
+    home: SplashView()
   ));
+}
+
+/// Is a smart move to make your Services intiialize before you run the Flutter app.
+/// as you can control the execution flow (maybe you need to load some Theme configuration,
+/// apiKey, language defined by the User... so load SettingService before running ApiService.
+/// so GetMaterialApp() doesnt have to rebuild, and takes the values directly.
+void initServices() async {
+  print('starting services ...');
+  /// Here is where you put get_storage, hive, shared_pref initialization.
+  /// or moor connection, or whatever that's async.
+  Get.put<AuthService>(AuthService());
+  print('All services started...');
 }
 
