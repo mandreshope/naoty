@@ -42,6 +42,8 @@ class HomeController extends GetxController {
 
   NoteModel note;
 
+  int limit = 4;
+
   @override
   void onInit() {
     super.onInit();
@@ -82,7 +84,7 @@ class HomeController extends GetxController {
         noteIdList.forEach((id)=>repository.delete(id)
         .then((value){
           clear();
-          getUserDetail().then((value) => closeLoadingDialog())
+          getAll().then((value) => closeLoadingDialog())
           .catchError((onError) {
             closeLoadingDialog();
           });
@@ -116,19 +118,17 @@ class HomeController extends GetxController {
   Future getMe() {
     return repository.me().then((value) {
       me = value;
-      getUserDetail();
+      getAll();
     });
   }
 
-  Future getUserDetail() {
-    return repository.getUser(me.id)
+  Future getAll() {
+    limit += 2;
+    return repository.getAll(me.id, limit)
     .then((value){
       clear();
       notes.clear();
-      List<NoteModel> sortList = [];
-      sortList.addAll(value.notes);
-      sortList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      notes.addAll(sortList);
+      notes.addAll(value);
     })
     .catchError((onError) {
       print(onError);
@@ -147,14 +147,14 @@ class HomeController extends GetxController {
 
   void onRefresh() async{
     // monitor network fetch
-    await getUserDetail();
+    await getAll();
     // if failed,use refreshFailed()
     refreshController.refreshCompleted();
   }
 
   void onLoading() async{
     // monitor network fetch
-    await getUserDetail();
+    await getAll();
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     refreshController.loadComplete();
   }

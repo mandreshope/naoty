@@ -21,9 +21,9 @@ class ApiClient {
   final http.Client httpClient;
   ApiClient({@required this.httpClient});
 
-  Future getAll() async {
+  Future getAll(String userId, int limit) async {
     try {
-      var response = await httpClient.get('$baseUrl${EndPoint.notes}')
+      var response = await httpClient.get('$baseUrl${EndPoint.notes}?users_permissions_user=$userId&_limit=$limit&_sort=createdAt:DESC')
       .timeout(timeout);
       if(response.statusCode == 200){
         var jsonResponse = json.decode(response.body);
@@ -78,10 +78,6 @@ class ApiClient {
     } on Error catch (_) {
       throw _.toString();
     } catch(_){ throw _.toString();}
-  }
-
-  getId(id){
-
   }
 
   Future delete(id) async {

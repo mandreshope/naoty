@@ -7,12 +7,8 @@ final ApiClient apiClient;
 
 NoteRepository({@required this.apiClient}) : assert(apiClient != null);
 
-  Future getAll(){
-    return apiClient.getAll();
-  }
-
-  Future getId(id){
-    return apiClient.getId(id);
+  Future getAll(String userId, int limit){
+    return apiClient.getAll(userId, limit);
   }
 
   Future delete(id){

@@ -19,7 +19,7 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
         title: Obx(()=>controller.selectionIsActive 
         ? Text("Élément sélectionné : ${controller.noteIdList.length}")
-        : Container()),
+        : Text("Naoty")),
         actions: [
           Obx(()=>Row(
             children: [
@@ -48,25 +48,31 @@ class HomeView extends GetView<HomeController> {
       body: Obx(()=> controller.notes.isEmpty ? Center(child: CircularProgressIndicator())
       : SmartRefresher(
         enablePullDown: true,
-        enablePullUp: false,
+        enablePullUp: true,
         header: WaterDropMaterialHeader(),
         footer: CustomFooter(
           builder: (BuildContext context,LoadStatus mode){
             Widget body;
             if(mode==LoadStatus.idle){
-              body =  Text("pull up load");
+              body =  Container();
             }
             else if(mode==LoadStatus.loading){
-              body =  CupertinoActivityIndicator();
+              body =  SizedBox(
+                height: 20.0,
+                width: 20.0,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0
+                )
+              );
             }
             else if(mode == LoadStatus.failed){
               body = Text("Load Failed!Click retry!");
             }
             else if(mode == LoadStatus.canLoading){
-                body = Text("release to load more");
+              body = Text("Relâchez pour charger plus de données");
             }
             else{
-              body = Text("No more Data");
+              body = Text("Plus de données");
             }
             return Container(
               height: 55.0,

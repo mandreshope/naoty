@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:naoty/app/data/services/auth_service.dart';
-import 'package:naoty/app/tools/tools.dart';
-import 'package:naoty/app/widgets/alert_popup.dart';
 
 class ResetPasswordController extends GetxController {
 
