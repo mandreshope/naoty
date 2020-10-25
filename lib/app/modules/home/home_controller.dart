@@ -84,7 +84,7 @@ class HomeController extends GetxController {
         noteIdList.forEach((id)=>repository.delete(id)
         .then((value){
           clear();
-          getAll().then((value) => closeLoadingDialog())
+          getAll(pullDown: true).then((value) => closeLoadingDialog())
           .catchError((onError) {
             closeLoadingDialog();
           });
@@ -118,12 +118,16 @@ class HomeController extends GetxController {
   Future getMe() {
     return repository.me().then((value) {
       me = value;
-      getAll();
+      getAll(pullDown: true);
     });
   }
 
-  Future getAll() {
-    limit += 2;
+  Future getAll({@required bool pullDown}) {
+    if(pullDown) {
+      limit = 6;
+    }else {
+      limit += 2;
+    }
     return repository.getAll(me.id, limit)
     .then((value){
       clear();
@@ -146,15 +150,25 @@ class HomeController extends GetxController {
   }
 
   void onRefresh() async{
+    refreshController.requestRefresh();
     // monitor network fetch
-    await getAll();
+    if(refreshController.footerStatus ==LoadStatus.loading) {
+      await getAll(pullDown: false);
+    }else if(refreshController.headerStatus ==RefreshStatus.refreshing) {
+      await getAll(pullDown: true);
+    }
+    
     // if failed,use refreshFailed()
     refreshController.refreshCompleted();
   }
 
   void onLoading() async{
     // monitor network fetch
-    await getAll();
+    if(refreshController.footerMode.value ==LoadStatus.loading) {
+      await getAll(pullDown: false);
+    }else if(refreshController.headerStatus ==RefreshStatus.refreshing) {
+      await getAll(pullDown: true);
+    }
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     refreshController.loadComplete();
   }
