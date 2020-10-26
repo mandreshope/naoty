@@ -98,7 +98,7 @@ class HomeView extends GetView<HomeController> {
               boxShadow: controller.notes[index].isSelected.value 
               ?  []
               : [
-                BoxShadow(color: Colors.grey[200], offset: Offset(0, 5), blurRadius: 5)
+                BoxShadow(color: Colors.grey[200], offset: Offset(0, 2), blurRadius: 5)
               ],
               color: Colors.white
             ),
@@ -181,7 +181,7 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.person, color: Get.theme.primaryColor),
-                    title: Obx(()=>Text(controller.me?.username ?? "", style: TextStyle(
+                    title: Obx(()=>Text(controller.me?.username ?? "...", style: TextStyle(
                         color: Get.theme.primaryColor,
                         fontSize: 18,
                         fontWeight: FontWeight.bold

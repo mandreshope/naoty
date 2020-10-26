@@ -12,6 +12,7 @@ class AuthService extends GetxService {
   final NoteRepository repository = NoteRepository(apiClient: ApiClient(httpClient: http.Client()));
  
   final GetStorage token = GetStorage();
+  final GetStorage userId = GetStorage();
   
   Rx<Status> _status = Status.Uninitialized.obs;
   Status get status => this._status.value;
@@ -26,7 +27,6 @@ class AuthService extends GetxService {
   void onReady() {
     isLoggedIn();
     token.listenKey(tokenBox, (token){
-      print(token);
       if(token != null) {
         status = Status.Authenticated;
       }else {
@@ -51,6 +51,7 @@ class AuthService extends GetxService {
       closeLoadingDialog();
       currentUser = value;
       token.write(tokenBox, currentUser.jwt);
+      userId.write(userIdBox, currentUser.user.id);
       Get.offAllNamed(Routes.HOME);
     }).catchError((onError) {
       closeLoadingDialog();
@@ -73,6 +74,7 @@ class AuthService extends GetxService {
       closeLoadingDialog();
       currentUser = value;
       token.write(tokenBox, currentUser.jwt);
+      userId.write(userIdBox, currentUser.user.id);
       Get.offAllNamed(Routes.HOME);
     }).catchError((onError) {
       closeLoadingDialog();
@@ -99,10 +101,10 @@ class AuthService extends GetxService {
       closeLoadingDialog();
       currentUser = value;
       token.write(tokenBox, currentUser.jwt);
+      userId.write(userIdBox, currentUser.user.id);
       Get.offAllNamed(Routes.HOME);
     })
     .catchError((onError) {
-      print(onError);
       closeLoadingDialog();
       Get.dialog(
         AlertPopup(
@@ -119,7 +121,8 @@ class AuthService extends GetxService {
 
   Future<void> signOut() async {
     return Future.wait([
-      token.write(tokenBox, null),
+      token.erase(),
+      userId.erase(),
       Get.offAllNamed(Routes.LOGIN),
     ]);
   }

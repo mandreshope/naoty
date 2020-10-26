@@ -58,7 +58,7 @@ class HomeController extends GetxController {
   goToEditor(index) {
     note = notes[index];
     Get.toNamed(Routes.EDITOR)
-    .then((value) => getAll(pullDown: false));
+    .then((value) => getAll(pullDown: true));
   }
 
   clear() {
@@ -107,7 +107,7 @@ class HomeController extends GetxController {
     note = null;
     clear();
     Get.toNamed(Routes.EDITOR)
-    .then((value) => getAll(pullDown: false));
+    .then((value) => getAll(pullDown: true));
   }
 
   Future getMe() {
@@ -123,7 +123,6 @@ class HomeController extends GetxController {
     }else {
       limit += 2;
     }
-    print("userId : "+me.id);
     return repository.getAll(me.id, limit)
     .then((value){
       clear();
@@ -152,8 +151,6 @@ class HomeController extends GetxController {
       await getAll(pullDown: false);
     }else if(refreshController.headerStatus ==RefreshStatus.refreshing) {
       await getAll(pullDown: true);
-    }else {
-      await getAll(pullDown: false);
     }
     
     // if failed,use refreshFailed()

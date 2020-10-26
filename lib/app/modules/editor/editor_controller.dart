@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:naoty/app/data/models/note_model.dart';
 import 'package:naoty/app/data/repositories/note_repository.dart';
@@ -16,7 +17,7 @@ class EditorController extends GetxController {
   TextEditingController contentController = TextEditingController();
 
   NoteModel note = Get.find<HomeController>().note;
-  String userId = Get.find<HomeController>().me.id;
+  String userId = GetStorage().read(userIdBox);
 
   
   RxBool _isBtnSaveEnabled = false.obs;
