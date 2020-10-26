@@ -30,7 +30,7 @@ class ApiClient {
         Iterable iterable = jsonResponse;
         List<NoteModel> result = iterable.map((model) => NoteModel.fromJson(model)).toList();
         return result;
-      }else throw 'error server';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -50,7 +50,7 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         MeModel result = MeModel.fromJson(jsonResponse);
         return result;
-      }else throw 'erreur serveur';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -70,7 +70,7 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         MeModel result = MeModel.fromJson(jsonResponse);
         return result;
-      }else throw 'erreur serveur';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -89,7 +89,7 @@ class ApiClient {
       if(response.statusCode == 200){
         var jsonResponse = json.decode(response.body);
         return jsonResponse;
-      }else throw 'error';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -111,7 +111,7 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         NoteModel result = NoteModel.fromJson(jsonResponse);
         return result;
-      }else throw 'error';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -134,7 +134,7 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         NoteModel result = NoteModel.fromJson(jsonResponse);
         return result;
-      }else throw 'error';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -159,7 +159,7 @@ class ApiClient {
         return result;
       }else if(response.statusCode == 400) {
         throw "Identifiant ou mot de passe invalide.";
-      }else throw "erreur serveur";
+      }else throw "Erreur serveur.";
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -183,7 +183,7 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         UserModel result = UserModel.fromJson(jsonResponse);
         return result;
-      }else throw 'error';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {
@@ -204,7 +204,7 @@ class ApiClient {
       if(response.statusCode == 200){
         var jsonResponse = json.decode(response.body);
         return jsonResponse;
-      }else throw 'error';
+      }else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {

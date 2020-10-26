@@ -25,20 +25,15 @@ class HomeController extends GetxController {
   MeModel get me => this._me.value;
   set me(value) => this._me.value = value;
 
-  
   RxBool _selectionIsActive = false.obs;
   bool get selectionIsActive => this._selectionIsActive.value;
   set selectionIsActive(value) => this._selectionIsActive.value = value;
 
-  
   RxList<String> _noteIdList = <String>[].obs;
   RxList<String> get noteIdList => this._noteIdList;
-  set noteIdList(value) => this._noteIdList.value = value;
-  
-  
+  set noteIdList(value) => this._noteIdList.value = value; 
 
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(initialRefresh: false);
 
   NoteModel note;
 
@@ -63,7 +58,7 @@ class HomeController extends GetxController {
   goToEditor(index) {
     note = notes[index];
     Get.toNamed(Routes.EDITOR)
-    .then((value) => onRefresh());
+    .then((value) => getAll(pullDown: false));
   }
 
   clear() {
@@ -112,7 +107,7 @@ class HomeController extends GetxController {
     note = null;
     clear();
     Get.toNamed(Routes.EDITOR)
-    .then((value) => onRefresh());
+    .then((value) => getAll(pullDown: false));
   }
 
   Future getMe() {
@@ -128,6 +123,7 @@ class HomeController extends GetxController {
     }else {
       limit += 2;
     }
+    print("userId : "+me.id);
     return repository.getAll(me.id, limit)
     .then((value){
       clear();
@@ -156,6 +152,8 @@ class HomeController extends GetxController {
       await getAll(pullDown: false);
     }else if(refreshController.headerStatus ==RefreshStatus.refreshing) {
       await getAll(pullDown: true);
+    }else {
+      await getAll(pullDown: false);
     }
     
     // if failed,use refreshFailed()
