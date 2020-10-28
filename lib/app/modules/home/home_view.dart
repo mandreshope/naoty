@@ -181,15 +181,12 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.person, color: Get.theme.primaryColor),
-                    title: Obx(()=>Text(controller.me?.username ?? "...", style: TextStyle(
+                    title: Text(controller.user["username"] ?? "...", style: TextStyle(
                         color: Get.theme.primaryColor,
                         fontSize: 18,
                         fontWeight: FontWeight.bold
                       ),
-                    )),
-                    onTap: () {
-                      
-                    },
+                    ),
                   ),
                   ListTile(
                     leading: Icon(Icons.info, color: Get.theme.primaryColor),
@@ -216,9 +213,6 @@ class HomeView extends GetView<HomeController> {
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          onTap: () {
-
-                          },
                         );
                       }else {
                         return Container();

@@ -183,7 +183,11 @@ class ApiClient {
         var jsonResponse = json.decode(response.body);
         UserModel result = UserModel.fromJson(jsonResponse);
         return result;
-      }else throw 'Erreur serveur.';
+      }else if(response.statusCode == 400) {
+        var jsonResponse = json.decode(response.body);
+        throw jsonResponse["data"][0]["messages"][0]["message"];
+      }
+      else throw 'Erreur serveur.';
     } on TimeoutException catch (_) {
       throw "Le délai d'attente est dépassé.";
     } on SocketException catch (_) {

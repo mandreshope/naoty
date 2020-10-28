@@ -12,7 +12,7 @@ class AuthService extends GetxService {
   final NoteRepository repository = NoteRepository(apiClient: ApiClient(httpClient: http.Client()));
  
   final GetStorage token = GetStorage();
-  final GetStorage userId = GetStorage();
+  final GetStorage user = GetStorage();
   
   Rx<Status> _status = Status.Uninitialized.obs;
   Status get status => this._status.value;
@@ -51,7 +51,7 @@ class AuthService extends GetxService {
       closeLoadingDialog();
       currentUser = value;
       token.write(tokenBox, currentUser.jwt);
-      userId.write(userIdBox, currentUser.user.id);
+      user.write(userBox, currentUser.user);
       Get.offAllNamed(Routes.HOME);
     }).catchError((onError) {
       closeLoadingDialog();
@@ -74,14 +74,14 @@ class AuthService extends GetxService {
       closeLoadingDialog();
       currentUser = value;
       token.write(tokenBox, currentUser.jwt);
-      userId.write(userIdBox, currentUser.user.id);
+      user.write(userBox, currentUser.user);
       Get.offAllNamed(Routes.HOME);
     }).catchError((onError) {
       closeLoadingDialog();
       Get.dialog(
         AlertPopup(
           isError: true,
-          title: "Erreur connexion",
+          title: "Erreur",
           content: onError.toString(),
           onCanceled: () {
             Get.back();
@@ -101,7 +101,7 @@ class AuthService extends GetxService {
       closeLoadingDialog();
       currentUser = value;
       token.write(tokenBox, currentUser.jwt);
-      userId.write(userIdBox, currentUser.user.id);
+      user.write(userBox, currentUser.user.toJson());
       Get.offAllNamed(Routes.HOME);
     })
     .catchError((onError) {
@@ -122,7 +122,7 @@ class AuthService extends GetxService {
   Future<void> signOut() async {
     return Future.wait([
       token.erase(),
-      userId.erase(),
+      user.erase(),
       Get.offAllNamed(Routes.LOGIN),
     ]);
   }

@@ -17,7 +17,7 @@ class EditorController extends GetxController {
   TextEditingController contentController = TextEditingController();
 
   NoteModel note = Get.find<HomeController>().note;
-  String userId = GetStorage().read(userIdBox);
+  var user = GetStorage().read(userBox);
 
   
   RxBool _isBtnSaveEnabled = false.obs;
@@ -53,7 +53,7 @@ class EditorController extends GetxController {
     }
     if (note == null) {
       showLoadingDialog();
-      repository.add(contentController.text, userId)
+      repository.add(contentController.text, user['id'])
       .then((value){
         closeLoadingDialog();
         Get.back();

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
-import 'package:naoty/app/data/models/me_model.dart';
 import 'package:naoty/app/data/models/note_model.dart';
 import 'package:naoty/app/data/repositories/note_repository.dart';
 import 'package:naoty/app/data/services/auth_service.dart';
@@ -21,9 +21,7 @@ class HomeController extends GetxController {
   RxList<NoteModel> get notes => this._notes;
   set notes(value) => this._notes.value = value;
 
-  Rx<MeModel> _me = MeModel().obs;
-  MeModel get me => this._me.value;
-  set me(value) => this._me.value = value;
+  var user = GetStorage().read(userBox);
 
   RxBool _selectionIsActive = false.obs;
   bool get selectionIsActive => this._selectionIsActive.value;
@@ -37,7 +35,7 @@ class HomeController extends GetxController {
 
   NoteModel note;
 
-  int limit = 4;
+  int limit = 10;
 
   @override
   void onInit() {
@@ -46,7 +44,7 @@ class HomeController extends GetxController {
 
   @override
   onReady() {
-    getMe();
+    getAll(pullDown: true);
     super.onReady();
   }
 
@@ -110,20 +108,13 @@ class HomeController extends GetxController {
     .then((value) => getAll(pullDown: true));
   }
 
-  Future getMe() {
-    return repository.me().then((value) {
-      me = value;
-      getAll(pullDown: true);
-    });
-  }
-
   Future getAll({@required bool pullDown}) {
     if(pullDown) {
-      limit = 6;
+      limit = 10;
     }else {
-      limit += 2;
+      limit += 10;
     }
-    return repository.getAll(me.id, limit)
+    return repository.getAll(user['id'], limit)
     .then((value){
       clear();
       notes.clear();
