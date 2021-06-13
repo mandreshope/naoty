@@ -11,11 +11,13 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Get.theme.primaryColor,),
-          onPressed: () {
-            Get.back();
-          }
-        ),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Get.theme.primaryColor,
+            ),
+            onPressed: () {
+              Get.back();
+            }),
         elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -29,12 +31,17 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                 padding: EdgeInsets.only(bottom: 15),
                 margin: EdgeInsets.only(right: 60),
                 alignment: Alignment.topLeft,
-                child: Text("Réinitialisez \nvotre mot de passe".tr, style: TextStyle(
-                  color: Get.theme.primaryColor, fontSize: 30
-                ),),),
+                child: Text(
+                  "Réinitialisez \nvotre mot de passe".tr,
+                  style: TextStyle(color: Get.theme.primaryColor, fontSize: 30),
+                ),
+              ),
               InputField(
                 controller: controller.codeController,
-                prefixIcon: Icon(Icons.vpn_key, color: Get.theme.primaryColor,),
+                prefixIcon: Icon(
+                  Icons.vpn_key,
+                  color: Get.theme.primaryColor,
+                ),
                 keyboardType: TextInputType.emailAddress,
                 hintText: "Code".tr,
                 onChanged: (v) {
@@ -43,7 +50,10 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
               ),
               InputField(
                 controller: controller.passwordController,
-                prefixIcon: Icon(Icons.security, color: Get.theme.primaryColor,),
+                prefixIcon: Icon(
+                  Icons.security,
+                  color: Get.theme.primaryColor,
+                ),
                 hintText: "Mot de passe".tr,
                 onChanged: (v) {
                   controller.isTextFieldEmpty();
@@ -51,21 +61,38 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
               ),
               InputField(
                 controller: controller.cpasswordController,
-                prefixIcon: Icon(Icons.security, color: Get.theme.primaryColor,),
+                prefixIcon: Icon(
+                  Icons.security,
+                  color: Get.theme.primaryColor,
+                ),
                 hintText: "Confirmation mot de passe".tr,
                 onChanged: (v) {
                   controller.isTextFieldEmpty();
                 },
               ),
-              SizedBox(height: 10,),
-              Obx(()=>PrimaryButton(
-                backgroundColor: controller.isButtonEnabled ? Get.theme.primaryColor : Colors.grey[200],
-                child: Text("REINITIALISER".tr,style: TextStyle(
-                color: controller.isButtonEnabled ? Colors.white : Get.theme.primaryColor.withOpacity(0.7),
-                fontSize: 18,
-              )), onPressed: () {
-                controller.resetPassword();
-              },),),
+              SizedBox(
+                height: 10,
+              ),
+              Obx(
+                () => PrimaryButton(
+                  width: double.infinity,
+                  backgroundColor: controller.isButtonEnabled
+                      ? Get.theme.primaryColor
+                      : Colors.grey[200],
+                  child: Text(
+                    "REINITIALISER".tr,
+                    style: TextStyle(
+                      color: controller.isButtonEnabled
+                          ? Colors.white
+                          : Get.theme.primaryColor.withOpacity(0.7),
+                      fontSize: 18,
+                    ),
+                  ),
+                  onPressed: () {
+                    controller.resetPassword();
+                  },
+                ),
+              ),
             ],
           ),
         ),

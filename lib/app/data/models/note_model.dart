@@ -1,12 +1,10 @@
-import 'package:get/get.dart';
-
 class NoteModel {
-  String id;
-  String content;
-  String publishedAt;
-  String createdAt;
-  String updatedAt;
-  RxBool isSelected = false.obs;
+  String? id;
+  String? content;
+  String? publishedAt;
+  String? createdAt;
+  String? updatedAt;
+  bool isSelected = false;
 
   NoteModel(
       {this.id,

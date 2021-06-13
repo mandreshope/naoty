@@ -1,18 +1,18 @@
 import 'package:naoty/app/data/models/note_model.dart';
 
 class MeModel {
-  bool confirmed;
-  bool blocked;
-  String sId;
-  String username;
-  String email;
-  String provider;
-  String createdAt;
-  String updatedAt;
-  int iV;
-  Role role;
-  List<NoteModel> notes;
-  String id;
+  bool? confirmed;
+  bool? blocked;
+  String? sId;
+  String? username;
+  String? email;
+  String? provider;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+  Role? role;
+  List<NoteModel>? notes;
+  String? id;
 
   MeModel(
       {this.confirmed,
@@ -40,9 +40,9 @@ class MeModel {
     iV = json['__v'];
     role = json['role'] != null ? new Role.fromJson(json['role']) : null;
     if (json['notes'] != null) {
-      notes = new List<NoteModel>();
+      notes = <NoteModel>[];
       json['notes'].forEach((v) {
-        notes.add(new NoteModel.fromJson(v));
+        notes!.add(new NoteModel.fromJson(v));
       });
     }
     id = json['id'];
@@ -60,10 +60,10 @@ class MeModel {
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
     if (this.role != null) {
-      data['role'] = this.role.toJson();
+      data['role'] = this.role!.toJson();
     }
     if (this.notes != null) {
-      data['notes'] = this.notes.map((v) => v.toJson()).toList();
+      data['notes'] = this.notes!.map((v) => v.toJson()).toList();
     }
     data['id'] = this.id;
     return data;
@@ -71,12 +71,12 @@ class MeModel {
 }
 
 class Role {
-  String sId;
-  String name;
-  String description;
-  String type;
-  int iV;
-  String id;
+  String? sId;
+  String? name;
+  String? description;
+  String? type;
+  int? iV;
+  String? id;
 
   Role({this.sId, this.name, this.description, this.type, this.iV, this.id});
 

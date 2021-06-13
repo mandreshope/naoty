@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DialogContainer extends StatelessWidget {
-  final Widget child;
-  const DialogContainer({Key key, this.child}) : super(key: key);
+  final Widget? child;
+  const DialogContainer({Key? key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

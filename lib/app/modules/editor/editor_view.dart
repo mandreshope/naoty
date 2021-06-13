@@ -5,20 +5,16 @@ import 'package:intl/intl.dart';
 import 'editor_controller.dart';
 
 class EditorView extends GetView<EditorController> {
-
   @override
   Widget build(BuildContext context) {
-
-    final editor = TextField( 
+    final editor = TextField(
       maxLines: Get.height.toInt(),
       minLines: 1,
       controller: controller.contentController,
       autofocus: true,
       style: TextStyle(fontSize: 20),
       decoration: InputDecoration(
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.all(0)
-      ),
+          border: InputBorder.none, contentPadding: EdgeInsets.all(0)),
       onChanged: (v) {
         controller.checkFieldIsEmpty();
       },
@@ -32,10 +28,19 @@ class EditorView extends GetView<EditorController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             editor,
-            SizedBox(height: 10,),
-            controller.note != null 
-            ? Text("Dernière mise à jour le "+(DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.updatedAt))?? ""), )
-            : Container(),
+            SizedBox(
+              height: 10,
+            ),
+            controller.note != null
+                ? Text(
+                    "Dernière mise à jour le " +
+                        (DateFormat.yMMMMd('fr_FR').format(
+                            DateTime.parse(controller.note!.updatedAt!))) +
+                        ", " +
+                        (DateFormat.Hm('fr_FR').format(
+                            DateTime.parse(controller.note!.updatedAt!))),
+                  )
+                : Container(),
           ],
         ),
       ),
@@ -45,32 +50,47 @@ class EditorView extends GetView<EditorController> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close, color: Get.context.theme.primaryColor, size: 25,), 
-          onPressed: () {
-            Get.back();
-          }
-        ),
+            icon: Icon(
+              Icons.close,
+              color: Get.context!.theme.primaryColor,
+              size: 25,
+            ),
+            onPressed: () {
+              Get.back();
+            }),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: controller.note != null 
-        ? Text((DateFormat.yMMMMd('fr_FR').format(DateTime.parse(controller.note.createdAt))?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.parse(controller.note.createdAt))?? ""), 
-          style: TextStyle(
-            color: Get.theme.primaryColor.withOpacity(0.5)
-          ),
-        )
-        : Text((DateFormat.yMMMMd('fr_FR').format(DateTime.now())?? "") +", "+ (DateFormat.Hm('fr_FR').format(DateTime.now())?? ""), 
-          style: TextStyle(
-            color: Get.theme.primaryColor.withOpacity(0.5)
-          ),
-        ),
+        title: controller.note != null
+            ? Text(
+                (DateFormat.yMMMMd('fr_FR')
+                        .format(DateTime.parse(controller.note!.createdAt!))) +
+                    ", " +
+                    (DateFormat.Hm('fr_FR')
+                        .format(DateTime.parse(controller.note!.createdAt!))),
+                style:
+                    TextStyle(color: Get.theme.primaryColor.withOpacity(0.5)),
+              )
+            : Text(
+                (DateFormat.yMMMMd('fr_FR').format(DateTime.now())) +
+                    ", " +
+                    (DateFormat.Hm('fr_FR').format(DateTime.now())),
+                style:
+                    TextStyle(color: Get.theme.primaryColor.withOpacity(0.5)),
+              ),
         actions: <Widget>[
-          Obx(()=>IconButton(
-            icon: Icon(Icons.check, color: controller.isBtnSaveEnabled 
-            ? Get.context.theme.primaryColor 
-            : Get.context.theme.primaryColor.withOpacity(0.5), size: 25,),
-            onPressed: () => controller.save(),
-          ),)
+          Obx(
+            () => IconButton(
+              icon: Icon(
+                Icons.check,
+                color: controller.isBtnSaveEnabled
+                    ? Get.context!.theme.primaryColor
+                    : Get.context!.theme.primaryColor.withOpacity(0.5),
+                size: 25,
+              ),
+              onPressed: () => controller.save(),
+            ),
+          )
         ],
       ),
       body: form,

@@ -1,8 +1,8 @@
 import 'package:naoty/app/data/models/note_model.dart';
 
 class UserModel {
-  String jwt;
-  User user;
+  String? jwt;
+  User? user;
 
   UserModel({this.jwt, this.user});
 
@@ -15,25 +15,25 @@ class UserModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['jwt'] = this.jwt;
     if (this.user != null) {
-      data['user'] = this.user.toJson();
+      data['user'] = this.user!.toJson();
     }
     return data;
   }
 }
 
 class User {
-  bool confirmed;
-  bool blocked;
-  String sId;
-  String username;
-  String email;
-  String provider;
-  String createdAt;
-  String updatedAt;
-  int iV;
-  Role role;
-  List<NoteModel> notes;
-  String id;
+  bool? confirmed;
+  bool? blocked;
+  String? sId;
+  String? username;
+  String? email;
+  String? provider;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+  Role? role;
+  List<NoteModel>? notes;
+  String? id;
 
   User(
       {this.confirmed,
@@ -61,9 +61,9 @@ class User {
     iV = json['__v'];
     role = json['role'] != null ? new Role.fromJson(json['role']) : null;
     if (json['notes'] != null) {
-      notes = new List<NoteModel>();
+      notes = <NoteModel>[];
       json['notes'].forEach((v) {
-        notes.add(new NoteModel.fromJson(v));
+        notes!.add(new NoteModel.fromJson(v));
       });
     }
     id = json['id'];
@@ -81,10 +81,10 @@ class User {
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
     if (this.role != null) {
-      data['role'] = this.role.toJson();
+      data['role'] = this.role!.toJson();
     }
     if (this.notes != null) {
-      data['notes'] = this.notes.map((v) => v.toJson()).toList();
+      data['notes'] = this.notes!.map((v) => v.toJson()).toList();
     }
     data['id'] = this.id;
     return data;
@@ -92,12 +92,12 @@ class User {
 }
 
 class Role {
-  String sId;
-  String name;
-  String description;
-  String type;
-  int iV;
-  String id;
+  String? sId;
+  String? name;
+  String? description;
+  String? type;
+  int? iV;
+  String? id;
 
   Role({this.sId, this.name, this.description, this.type, this.iV, this.id});
 

@@ -1,26 +1,23 @@
-import 'package:meta/meta.dart';
+import 'package:get/get.dart';
 import 'package:naoty/app/data/providers/api.dart';
 
 class NoteRepository {
+  final ApiClient apiClient = Get.find();
 
-final ApiClient apiClient;
-
-NoteRepository({@required this.apiClient}) : assert(apiClient != null);
-
-  Future getAll(String userId, int limit){
+  Future getAll(String? userId, int limit) {
     return apiClient.getAll(userId, limit);
   }
 
-  Future delete(id){
-    return apiClient.delete(id);
+  Future delete(id) {
+    return apiClient.deleteNote(id);
   }
 
-  Future edit(String id, String content){
+  Future edit(String? id, String content) {
     return apiClient.edit(id, content);
   }
 
-  Future add(String content, String userId){
-      return apiClient.add(content, userId);
+  Future add(String content, String? userId) {
+    return apiClient.add(content, userId);
   }
 
   Future me() {
@@ -43,8 +40,8 @@ NoteRepository({@required this.apiClient}) : assert(apiClient != null);
     return apiClient.forgotPassword(email);
   }
 
-  Future resetPassword(String code, String password, String passwordConfirmation) {
+  Future resetPassword(
+      String code, String password, String passwordConfirmation) {
     return apiClient.resetPassword(code, password, passwordConfirmation);
   }
-
 }

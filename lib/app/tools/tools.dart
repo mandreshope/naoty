@@ -10,5 +10,5 @@ showLoadingDialog() {
 }
 
 closeLoadingDialog() {
-  if(Get.isDialogOpen) Get.back();
+  if(Get.isDialogOpen!) Get.back();
 }
